@@ -1,0 +1,162 @@
+main {
+
+
+}
+
+body {
+    background-color: #2196F3;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+nav {
+    background-color: #1976D2;
+}
+
+.favIcon {
+  font-size: 150%;
+}
+
+.forumBorder {
+    border: 1px solid black;
+    background-color: #607D8B;
+    margin-bottom: 5%;
+}
+
+.xComment {
+    background-color: #BDBDBD;
+}
+
+.forumImg {
+    margin: 5%;
+    height: 90%;
+    width: 70%;
+}
+
+.posVote {
+    color: green;
+}
+
+.negVote {
+    color: red;
+}
+
+.post {
+    opacity: 1;
+}
+
+.post.ng-enter {
+    -webkit-animation: fadeInRight 1s;
+    -webkit-transition: 1s;
+    transition: 1s;
+    opacity: 0;
+    animation: fadeInRight 1s;
+}
+
+.post.ng-enter-active {
+    opacity: 1;
+}
+
+.post.ng-leave {
+    -webkit-animation: fadeOut 1s;
+    -webkit-transition: 1s;
+    transition: 1s;
+    opacity: 0;
+    animation: fadeOut 1s;
+}
+
+.post.ng-leave-active {
+    opacity: 0;
+}
+
+.post.ng-move {
+    -webkit-animation: fadeIn 1s;
+    -webkit-transition: 1s;
+    transition: 1s;
+    opacity: 0;
+    animation: fadeIn 1s;
+}
+
+.post.ng-move-active {
+    opacity: 1;
+}
+
+.post.ng-hide-add {
+    -webkit-animation: fadeOut 1s;
+    transition: 0.5s ease all;
+    opacity: 0.1;
+    animation: fadeOut .5s;
+}
+
+.post.ng-hide-add-active {
+    opacity: 0;
+}
+
+.post.ng-hide-remove {
+    -webkit-animation: fadeInRight 1s;
+    transition: 0.5s ease all;
+    opacity: 0.1;
+    animation: fadeInRight .5s;
+}
+
+.post.ng-hide-remove-active {
+    opacity: 0;
+}
+
+.post.ng-hide-add-stagger, .post.ng-hide-remove-stagger {
+    transition-delay: 0.5s;
+    transition-duration: 0.5s;
+}
+
+.comment.ng-hide-add {
+    -webkit-animation: flipOutX 1s;
+    transition: 0.5s ease all;
+    opacity: 0.1;
+    animation: flipOutX .5s;
+}
+
+.comment.ng-hide-add-active {
+    opacity: 0;
+}
+
+.comment.ng-hide-remove {
+    -webkit-animation: flipInX 1s;
+    transition: 0.5s ease all;
+    opacity: 0.1;
+    animation: flipInX .5s;
+}
+
+.comment.ng-hide-remove-active {
+    opacity: 0;
+}
+
+.comment.ng-hide-add-stagger, .comment.ng-hide-remove-stagger {
+    transition-delay: 0.5s;
+    transition-duration: 0.5s;
+}
+
+.commentH.ng-hide-add {
+    -webkit-animation: lightSpeedOut 1s;
+    transition: 0.5s ease all;
+    opacity: 0.1;
+    animation: lightSpeedOut .5s;
+}
+
+.commentH.ng-hide-add-active {
+    opacity: 0;
+}
+
+.commentH.ng-hide-remove {
+    -webkit-animation: lightSpeedIn 1s;
+    transition: 0.5s ease all;
+    opacity: 0.1;
+    animation: lightSpeedIn .5s;
+}
+
+.commentH.ng-hide-remove-active {
+    opacity: 0;
+}
+
+.commentH.ng-hide-add-stagger, .commentH.ng-hide-remove-stagger {
+    transition-delay: 0.5s;
+    transition-duration: 0.5s;
+}

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html ng-app="myApp" ng-cloak>
+
+<head>
+    <meta charset="utf-8">
+    <title>Reddit Clone</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Rajdhani:500" rel="stylesheet">
+    <script src="./app.js"></script>
+    <link rel="stylesheet" href="./styles.css" media="screen" title="no title">
+</head>
+
+<body ng-controller="RedditController">
+    <header>
+        <!-- Dropdown Structure -->
+        <ul id="dropdown1" class="dropdown-content">
+            <li ng-repeat=" sort in view.searchSort">
+                <a href="#" ng-click="sortBy(view.searchSort.indexOf(sort))">{{sort}}</a>
+            </li>
+        </ul>
+        <nav>
+            <div class="nav-wrapper z-depth-3">
+                <a href="#!" class="brand-logo">Reddit Clone</a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a ng-click="newPostForm()"> &#43; Add Post</a></li>
+                    <li>
+                        <form>
+                            <div class="input-field">
+                                <input id="search" type="search" ng-model="view.search" required>
+                                <label for="search"><i class="material-icons">Search</i></label>
+                                <i class="material-icons">close</i>
+                            </div>
+                        </form>
+                    </li>
+                    <li><a ng-click="ascDsc()">order of </a></li>
+                    <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Sort By: {{view.currentSearchValue}}<i class="material-icons right"></i></a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="container new-post">
+            <br>
+            <form name="newPost post" ng-submit="addPost(newPost)" ng-hide="newPostFormVisible !== true" class="fade post">
+                <div class="row forumBorder">
+                    <div class="col s12 m10 l10 offset-l1 offset-m1 ">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input placeholder="Title" ng-model="newPost.title" id="title" name="title" type="text" class="validate" required>
+                                <label for="title">Title</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col l12 m12 s12">
+                                <textarea placeholder="Post" ng-model="newPost.post" id="post" name="post" type="text" class="materialize-textarea validate" required></textarea>
+                                <label for="post">Post</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col l12 m12 s12">
+                                <input placeholder="Author" ng-model="newPost.author" id="author" name="author" type="text" class="materialize-textarea validate" required>
+                                <label for="author">Author</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col l12 m12 s12">
+                                <input placeholder="Img URL" ng-model="newPost.img" id="img" name="img" type="text" class="materialize-textarea validate" required>
+                                <label for="img">IMG URL</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="section">
+                                <div class="center-align input-field">
+                                    <button type="submit" class="btn btn-warning btn-lg">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="container">
+            <div class="post" ng-repeat="post in view.posts | orderBy: view.currentSearchValue : reverse | filter: view.search">
+                <div class="row forumBorder z-depth-3">
+                    <div class="col s12 m4 l4 left">
+                        <img src="{{post.img}}" alt="" class="forumImg" />
+                    </div>
+                    <div class="col s12 m8 l8">
+                        <div class="row">
+                            <div class="col s12 m12 l12">
+                                <div class="row">
+                                    <div class="col s12 m12 l12">
+                                        <h5 class="post-h4">{{post.title}} | <a href="#" class="negVote" ng-click="vote(post,-1)">&darr;</a><a href="#" class="posVote" ng-click="vote(post,1)">&uarr;</a>    <span ng-class="{posVote: post.votes > 0, negVote: post.votes < 0}">{{post.votes}}</span></h5>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col s12 m12 l12">
+                                    <h6 class="right-align">By: {{post.author}}</h6>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col s12 m12 l12">
+                                    <p class="left-align">
+                                      {{post.post}}
+                                    </p>
+                                  </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col s12 m12 l12">
+                                    <p>
+                                      <span>&#x1f4c5; {{post.date}} | &#x1f4ac; </span>
+                                      <ng-pluralize ng-click="viewComments(post)" count="post.comments.length" when="{0:'No Comments',1: '1 Comment', 'other': '{{ post.comments.length }} Comments'}"></ng-pluralize>
+                                      |
+                                      <span ng-click="addCommentForm(post)">&#9998; Add Comment</span>
+                                      |
+                                      <span ng-class="{posVote: post.favorite === true, negVote: post.favorite === false}" ng-click="addFavorite(post)" class="favIcon"> &#402;</span>avorite
+                                    </p>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12 m10 l10 offset-l1 offset-m1 comment" ng-hide="post.newCommentVisible !== true">
+                            <div class="forumBorder">
+                                <form class="newComment fade" ng-submit="addComment(post,newComment)">
+                                    <div class="row">
+                                        <div class="input-field col l12 m12 s12">
+                                            <input placeholder="Author" ng-model="newComment.author" id="authorComment" name="author" type="text" class="materialize-textarea validate" required>
+                                            <label for="author">Author</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="input-field col l12 m12 s12">
+                                            <textarea placeholder="Text" ng-model="newComment.text" id="text" name="text" type="text" class="materialize-textarea validate" required></textarea>
+                                            <label for="text">Text</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="section">
+                                            <div class="center-align input-field">
+                                                <button type="submit" class="btn btn-warning btn-lg">Add</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <ul>
+                            <div class="col s12 m10 l10 offset-l1 offset-m1 commentH" ng-hide="post.commentsVisible !== true">
+                                <li class="forumBorder z-depth-2" ng-repeat="comment in post.comments">
+                                    <div class="row">
+                                        <div class="col s12 m12 l12">
+                                            <p>
+                                                By: {{comment.author}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col s12 m12 l12">
+                                            <p>
+                                                {{comment.text}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+    </main>
+    <footer>
+
+    </footer>
+</body>
+
+</html>
